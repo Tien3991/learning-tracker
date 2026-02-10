@@ -1,0 +1,107 @@
+<AddItemScreen>:
+    name: "add_item"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "Add New Item"
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: app.go_to_list()]]
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: "16dp"
+                spacing: "16dp"
+                size_hint_y: None
+                height: self.minimum_height
+                adaptive_height: True
+
+                MDTextField:
+                    id: name_field
+                    hint_text: "Name *"
+                    required: True
+                    size_hint_y: None
+                    height: "48dp"
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "8dp"
+
+                    MDLabel:
+                        text: "Type:"
+                        size_hint_x: 0.3
+                        valign: "center"
+
+                    MDRaisedButton:
+                        id: type_btn
+                        text: "book"
+                        on_release: root.show_type_menu()
+                        size_hint_x: 0.7
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "8dp"
+
+                    MDLabel:
+                        text: "Unit:"
+                        size_hint_x: 0.3
+                        valign: "center"
+
+                    MDRaisedButton:
+                        id: unit_btn
+                        text: "pages"
+                        on_release: root.show_unit_menu()
+                        size_hint_x: 0.7
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "8dp"
+
+                    MDLabel:
+                        text: "Status:"
+                        size_hint_x: 0.3
+                        valign: "center"
+
+                    MDRaisedButton:
+                        id: status_btn
+                        text: "active"
+                        on_release: root.show_status_menu()
+                        size_hint_x: 0.7
+
+                MDTextField:
+                    id: total_field
+                    hint_text: "Total units *"
+                    input_filter: "float"
+                    size_hint_y: None
+                    height: "48dp"
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "8dp"
+
+                    MDLabel:
+                        text: "Start Date:"
+                        size_hint_x: 0.3
+                        valign: "center"
+
+                    MDRaisedButton:
+                        id: date_btn
+                        text: "Now"
+                        on_release: root.pick_date()
+                        size_hint_x: 0.7
+
+                MDRaisedButton:
+                    text: "Create Item"
+                    pos_hint: {"center_x": 0.5}
+                    size_hint_x: 0.6
+                    on_release: root.submit()

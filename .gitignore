@@ -1,0 +1,11 @@
+data/
+.streamlit/secrets.toml
+__pycache__/
+*.pyc
+.conda/
+.claude/
+.DS_Store
+android/.buildozer/
+android/.buildozer_home/
+android/bin/
+android/data/

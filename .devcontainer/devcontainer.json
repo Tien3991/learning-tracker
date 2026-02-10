@@ -1,0 +1,18 @@
+{
+  "name": "Learning Tracker",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "postCreateCommand": "pip install -r requirements.txt",
+  "postStartCommand": "streamlit run app.py --server.address=0.0.0.0 --server.enableCORS=false --server.enableXsrfProtection=false &",
+  "forwardPorts": [8501],
+  "portsAttributes": {
+    "8501": {
+      "label": "Learning Tracker",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "secrets": {
+    "TRACKER_PASSWORD": {
+      "description": "Password for the learning tracker app"
+    }
+  }
+}

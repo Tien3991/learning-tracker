@@ -1,0 +1,200 @@
+<DetailScreen>:
+    name: "detail"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            id: toolbar
+            title: "Detail"
+            elevation: 2
+            left_action_items: [["arrow-left", lambda x: app.go_to_list()]]
+            right_action_items: [["delete", lambda x: root.confirm_delete()]]
+
+        ScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: "16dp"
+                spacing: "12dp"
+                size_hint_y: None
+                height: self.minimum_height
+                adaptive_height: True
+
+                # Header: type icon + name + status
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "12dp"
+
+                    MDIcon:
+                        id: type_icon
+                        icon: "book"
+                        theme_text_color: "Primary"
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        id: item_name_label
+                        text: ""
+                        font_style: "H6"
+                        size_hint_x: 0.6
+
+                    MDChip:
+                        id: status_chip
+                        text: "active"
+                        on_release: root.show_status_menu()
+                        icon_right: "menu-down"
+
+                # Progress bar + edit total
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "64dp"
+                    spacing: "4dp"
+
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: "24dp"
+
+                        MDLabel:
+                            id: progress_text
+                            text: "0 / 0"
+                            font_style: "Body2"
+                            size_hint_x: 0.8
+
+                        MDIconButton:
+                            icon: "pencil"
+                            on_release: root.show_edit_total_dialog()
+                            pos_hint: {"center_y": 0.5}
+
+                    MDProgressBar:
+                        id: progress_bar
+                        value: 0
+                        size_hint_y: None
+                        height: "6dp"
+
+                # Stats row
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "56dp"
+                    spacing: "8dp"
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        MDLabel:
+                            text: "Speed"
+                            font_style: "Caption"
+                            halign: "center"
+                        MDLabel:
+                            id: speed_label
+                            text: "\u2014"
+                            font_style: "Body2"
+                            halign: "center"
+                            bold: True
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        MDLabel:
+                            text: "Time Left"
+                            font_style: "Caption"
+                            halign: "center"
+                        MDLabel:
+                            id: time_remaining_label
+                            text: "\u2014"
+                            font_style: "Body2"
+                            halign: "center"
+                            bold: True
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        MDLabel:
+                            text: "ETA"
+                            font_style: "Caption"
+                            halign: "center"
+                        MDLabel:
+                            id: eta_label
+                            text: "\u2014"
+                            font_style: "Body2"
+                            halign: "center"
+                            bold: True
+
+                # Add checkpoint section
+                MDLabel:
+                    text: "Add Checkpoint"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: "32dp"
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "8dp"
+
+                    MDTextField:
+                        id: cp_value_field
+                        hint_text: "Value"
+                        input_filter: "float"
+                        size_hint_x: 0.4
+
+                    MDRaisedButton:
+                        id: cp_date_btn
+                        text: "Date: Now"
+                        on_release: root.pick_cp_date()
+                        size_hint_x: 0.3
+
+                    MDRaisedButton:
+                        id: cp_time_btn
+                        text: "Time: Now"
+                        on_release: root.pick_cp_time()
+                        size_hint_x: 0.3
+
+                MDTextField:
+                    id: cp_notes_field
+                    hint_text: "Notes (optional)"
+                    size_hint_y: None
+                    height: "48dp"
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: "48dp"
+                    spacing: "8dp"
+
+                    MDRaisedButton:
+                        text: "+ Add"
+                        on_release: root.add_checkpoint_cumulative()
+                        size_hint_x: 0.5
+
+                    MDRaisedButton:
+                        text: "= Set"
+                        on_release: root.add_checkpoint_absolute()
+                        size_hint_x: 0.5
+
+                # Chart container
+                MDLabel:
+                    text: "Progress Chart"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: "32dp"
+
+                BoxLayout:
+                    id: chart_container
+                    size_hint_y: None
+                    height: "300dp"
+
+                # Checkpoints list
+                MDLabel:
+                    text: "Checkpoints"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: "32dp"
+
+                MDBoxLayout:
+                    id: checkpoints_list
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: "4dp"

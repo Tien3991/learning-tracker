@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Conceal overlay -->
+  <div id="conceal-overlay" class="conceal-overlay hidden"></div>
+
+  <!-- Confirmation modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <p id="modal-message"></p>
+      <div class="modal-actions">
+        <button id="modal-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="modal-confirm" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <h1>Reading Tracker</h1>
+    <div class="header-actions">
+      <button id="export-btn" class="btn btn-secondary">Export</button>
+      <label class="btn btn-secondary import-label">
+        Import
+        <input type="file" id="import-input" accept=".json" hidden>
+      </label>
+      <button id="conceal-toggle" class="btn btn-icon" aria-label="Conceal page">
+        <span class="conceal-icon"></span>
+      </button>
+      <button id="theme-toggle" class="btn btn-icon" aria-label="Toggle theme">
+        <span class="theme-icon"></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Book List View -->
+    <section id="book-list-view">
+      <form id="add-book-form" class="add-book-form">
+        <h2>Add a Book</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="book-name">Book Name</label>
+            <input type="text" id="book-name" required placeholder="e.g. The Great Gatsby">
+          </div>
+          <div class="form-group">
+            <label for="book-pages">Total Pages</label>
+            <input type="number" id="book-pages" required min="1" step="1" placeholder="e.g. 352">
+          </div>
+          <div class="form-group">
+            <label for="book-start-time">Start Time</label>
+            <div class="input-with-clear">
+              <input type="datetime-local" id="book-start-time">
+              <button type="button" class="btn-clear" id="clear-book-start-time" title="Clear">&times;</button>
+            </div>
+          </div>
+          <div class="form-group form-group-btn">
+            <button type="submit" class="btn btn-primary">Add Book</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="empty-state" class="empty-state hidden">
+        <p>No books yet. Add one above to start tracking your reading!</p>
+      </div>
+
+      <div id="book-grid" class="book-grid"></div>
+    </section>
+
+    <!-- Book Detail View -->
+    <section id="book-detail-view" class="hidden">
+      <button id="back-btn" class="btn btn-secondary back-btn">&larr; Back to Books</button>
+
+      <div class="detail-header">
+        <h2 id="detail-book-name"></h2>
+        <div class="detail-progress">
+          <div class="progress-bar">
+            <div id="detail-progress-fill" class="progress-fill"></div>
+          </div>
+          <span id="detail-page-count" class="page-count"></span>
+        </div>
+      </div>
+
+      <!-- Estimation panel -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Reading Speed</div>
+          <div id="stat-speed" class="stat-value">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Time Remaining</div>
+          <div id="stat-remaining" class="stat-value">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Estimated Completion</div>
+          <div id="stat-eta" class="stat-value">—</div>
+        </div>
+      </div>
+
+      <!-- Add checkpoint form -->
+      <form id="add-checkpoint-form" class="add-checkpoint-form">
+        <h3>Add Checkpoint</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cp-page">Page Number</label>
+            <input type="number" id="cp-page" required min="0" step="1">
+          </div>
+          <div class="form-group">
+            <label for="cp-time">Time</label>
+            <div class="input-with-clear">
+              <input type="datetime-local" id="cp-time">
+              <button type="button" class="btn-clear" id="clear-cp-time" title="Clear">&times;</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cp-notes">Notes</label>
+            <input type="text" id="cp-notes" placeholder="e.g. Chapter 3">
+          </div>
+          <div class="form-group form-group-btn">
+            <button type="submit" class="btn btn-primary">Add Checkpoint</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Chart -->
+      <div class="chart-container">
+        <canvas id="reading-chart"></canvas>
+      </div>
+
+      <!-- Checkpoint table -->
+      <div class="checkpoint-section">
+        <h3>Checkpoints</h3>
+        <div class="table-wrapper">
+          <table id="checkpoint-table" class="checkpoint-table">
+            <thead>
+              <tr>
+                <th>Page</th>
+                <th>Time</th>
+                <th>Notes</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="checkpoint-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <button id="delete-book-btn" class="btn btn-danger delete-book-btn">Delete Book</button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+  <script src="app.js"></script>
+</body>
+</html>
